@@ -1,0 +1,60 @@
+def divide(a, b):
+    c = 0
+    while a >= b:
+        a -= b
+        c += 1
+    return c
+
+a= float(input("Enter the dividend: "))
+b = float(input("Enter the divisor: "))
+
+result = divide(a, b)
+print("The quotient of", a, "divided by", b, "is:", result)
+
+# a= dividend
+# b = divisor 
+# c = quotient 
+
+
+
+Binary search tree:
+
+class Node:
+    def __init__(self, val=None, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def is_bst(root):
+    def is_bst_helper(node, min_val, max_val):
+        if not node:
+            return True
+        if min_val and node.val <= min_val:
+            return False
+        if max_val and node.val >= max_val:
+            return False
+        left_is_bst = is_bst_helper(node.left, min_val, node.val)
+        right_is_bst = is_bst_helper(node.right, node.val, max_val)
+        return left_is_bst and right_is_bst
+
+    return is_bst_helper(root, None, None)
+    
+    root = Node(5)
+root.left = Node(3)
+root.right = Node(8)
+root.left.left = Node(1)
+root.left.right = Node(4)
+root.right.left = Node(6)
+root.right.right = Node(10)
+
+print(is_bst(root))
+
+root = Node(5)
+root.left = Node(3)
+root.right = Node(8)
+root.left.left = Node(1)
+root.left.right = Node(4)
+root.right.left = Node(6)
+root.right.right = Node(10)
+
+print(is_bst(root2))
