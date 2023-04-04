@@ -1,0 +1,71 @@
+Q1:-'''Given a hashmap associating each courseId key with a list of courseIds values, which represents that the prerequisites of courseId are courseIds.
+Return a sorted ordering of courses such that we can finish all courses.Return null if there is no such ordering.
+For example, given {'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC100': []}, should return ['CSC100', 'CSC200', 'CSCS300'].'''
+
+def sortCourseId(courseId):
+    # new array
+    a = []
+    # create list of tuples from dict
+    for k in courseId:
+        v = k, len(courseId[k])
+        a.append(v)
+    # sort by second item in tuple
+    a.sort(key=lambda x: x[1])
+    # reduce to single items
+    b = [b[0] for b in a]
+    return b
+courseId = {'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC100': []}
+result = sortCourseId(courseId)
+print(result)
+
+
+
+Q2:-'''Given a 2D matrix of characters and a target word, write a function that returns whether the word can be found in the matrix by going left-to-right, or up-to-down.
+For example, given the following matrix:
+[['F', 'A', 'C', 'I'],
+ ['O', 'B', 'Q', 'P'],
+ ['A', 'N', 'O', 'B'],
+ ['M', 'A', 'S', 'S']]
+and the target word 'FOAM', you should return true, since it's the leftmost column. Similarly, given the target word 'MASS', you should return true, since it's the last row.'''
+
+
+def word_in_matrix(matrix, word):
+    rows = len(matrix)
+    cols = len(matrix)
+    # Check rows
+    for i in range(rows):
+        row_str = "".join(matrix[i])
+        if word in row_str:
+            return True
+    # Check columns
+    for j in range(cols):
+        col_str = "".join([matrix[i][j] for i in range(rows)])
+        if word in col_str:
+            return True
+    # Word not found
+    return False
+    
+    Q3:-Given a number represented by a list of digits, find the next greater permutation of a number, in terms of lexicographic ordering. If there is not greater permutation possible, return the permutation with the lowest value/ordering.
+For example, the list [1,2,3] should return [1,3,2]. The list [1,3,2] should return [2,1,3]. The list [3,2,1] should return [1,2,3].
+Can you perform the operation without allocating extra memory (disregarding the input memory)?
+
+def next_permutation(nums):
+    i = len(nums) - 2
+    while i >= 0 and nums[i] >= nums[i+1]:
+        i -= 1
+    if i < 0:
+        nums.reverse()
+    else:
+        j = len(nums) - 1
+        while j > i and nums[j] <= nums[i]:
+            j -= 1
+        nums[i], nums[j] = nums[j], nums[i]
+        nums[i+1:] = reversed(nums[i+1:])
+    return nums
+# example input and output
+nums1 = [1, 2, 3]
+print(next_permutation(nums1)) # Output: [1, 3, 2]
+nums2 = [1, 3, 2]
+print(next_permutation(nums2)) # Output: [2, 1, 3]
+nums3 = [3, 2, 1]
+print(next_permutation(nums3)) # Output: [1, 2, 3]
